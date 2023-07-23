@@ -11,17 +11,20 @@ function TaskTimer() {
       // Increment seconds
       setSeconds((secondsTime) => {
         const newSeconds = secondsTime + 1;
-        if (newSeconds === 3) {
-          // Reset seconds to 0
+        if (newSeconds === 60) {
+          // Reset seconds to 0 at 60 seconds
           setSeconds(0)
           // Updating minute
           setMinutes((minutesTime) => {
             const newMinutes = minutesTime + 1;
-            if (newMinutes === 2) {
+            if (newMinutes === 60) {
+              //Reset minute to 0 at 60 minutes
               setMinutes(0)
+              // Updating Hour
               setHours((hoursTime) => { 
                 const newHours = hoursTime + 1;
                 if (newHours === 100) {
+                  // At 100 hours, force pause task
                   setLive(false);
                   return hours;
                 }
@@ -35,6 +38,7 @@ function TaskTimer() {
         return newSeconds;
       });
     }
+
     useEffect(() => {
       let intervalId;
   
@@ -79,10 +83,12 @@ function TaskTimer() {
     };
   
     return (
-      <div className='TaskTimer'>
+      <div className='taskTimer'>
         <div className='time'>{getTimeString()}</div>
-        <button onClick={startTime}>Start</button>
-        <button onClick={breakTime}>Break</button>
+        <div>
+          <button onClick={startTime}>Start</button>
+          <button onClick={breakTime}>Stop</button>
+        </div>
       </div>
     );
   }

@@ -9,7 +9,7 @@ function App () {
 
     const createTaskTimer = () => {
         if (inputName) {
-            const newTimer = <TaskTimer />;
+            const newTimer = <TaskTimer key={inputName}/>;
             const newObj = {id: 1, name: inputName, timer: newTimer}
             setTimers((prevTimers) => [...prevTimers, newObj]);
             setInputName(() => '');
@@ -19,7 +19,7 @@ function App () {
 
     const deleteTaskTimer = (taskId) => {
         // Delete taskTimer at the given taskId
-        const newTimers = [...timers];
+        const newTimers = timers.slice();
         newTimers.splice(taskId, 1);
         setTimers(() => newTimers);
     };
@@ -36,12 +36,14 @@ function App () {
                 />
                 <button onClick={() => createTaskTimer("t0t")}>Create Task</button>
             </div>
-            <div className='timers'>
+            <div className='tasks'>
                 {timers.map((value, index) => (
                     <div className='task' key={index}>
-                        <p>{value.name}</p>
-                        <div>{value.timer}</div>
-                        <button onClick={() => deleteTaskTimer(index)}>Quit</button>
+                        <div className='control'>
+                            <h2>{value.name}</h2>
+                            <button onClick={() => deleteTaskTimer(index)}>X</button>
+                        </div>
+                        {value.timer}
                     </div>
                 ))}
             </div>
